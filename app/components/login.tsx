@@ -108,7 +108,7 @@ export function Login() {
             className="footer"
             style={{ fontSize: "12px", marginTop: "20px" }}
           >
-            登录问题联系客服vx：AiGPT0003
+            登录问题联系客服qq：853816546
           </div>
         </div>
       </div>
