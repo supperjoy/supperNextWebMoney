@@ -437,24 +437,45 @@ export function Chat() {
   // submit user input
   const onUserSubmit = () => {
     if (userInput.length <= 0) return;
-    axios({
-      method: "get",
-      url: "https://demo.supperjoy.online/user/checkexpire",
-      withCredentials: true,
-    }).then((res) => {
-      if (res.data.code == 200) {
-        setIsLoading(true);
-        chatStore.onUserInput(userInput).then(() => setIsLoading(false));
-        setBeforeInput(userInput);
-        setUserInput("");
-        setPromptHints([]);
-        if (!isMobileScreen) inputRef.current?.focus();
-        setAutoScroll(true);
-      } else {
-        alert(res.data.msg);
-        navigate(Path.Commodity)
-      }
-    });
+    if (config.modelConfig.model == "gpt-3.5-turbo"||config.modelConfig.model == "gpt-3.5-turbo-0301") {
+      axios({
+        method: "get",
+        url: "https://demo.supperjoy.online/user/checkexpirethree",
+        withCredentials: true,
+      }).then((res) => {
+        if (res.data.code == 200) {
+          setIsLoading(true);
+          chatStore.onUserInput(userInput).then(() => setIsLoading(false));
+          setBeforeInput(userInput);
+          setUserInput("");
+          setPromptHints([]);
+          if (!isMobileScreen) inputRef.current?.focus();
+          setAutoScroll(true);
+        } else {
+          alert(res.data.msg);
+          navigate(Path.Commodity);
+        }
+      });
+    } else {
+      axios({
+        method: "get",
+        url: "https://demo.supperjoy.online/user/checkexpire",
+        withCredentials: true,
+      }).then((res) => {
+        if (res.data.code == 200) {
+          setIsLoading(true);
+          chatStore.onUserInput(userInput).then(() => setIsLoading(false));
+          setBeforeInput(userInput);
+          setUserInput("");
+          setPromptHints([]);
+          if (!isMobileScreen) inputRef.current?.focus();
+          setAutoScroll(true);
+        } else {
+          alert(res.data.msg);
+          navigate(Path.Commodity);
+        }
+      });
+    }
   };
 
   // stop response
