@@ -2,6 +2,7 @@ import "./commodity.scss";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Path } from "../constant";
+import { ErrorBoundary } from "./error";
 import { useState, useEffect } from "react";
 import { IconButton } from "./button";
 import CloseIcon from "../icons/close.svg";
@@ -36,7 +37,7 @@ export function Commodity() {
     getCommodity();
   }, []);
   return (
-    <div className="box">
+    <ErrorBoundary>
       <div className="window-header">
         <div className="window-header-title">
           <div className="window-header-main-title">充值时长</div>
@@ -53,42 +54,44 @@ export function Commodity() {
           </div>
         </div>
       </div>
-      <ul className="commodity">
-        {products.map((item) => (
-          <li onClick={() => goPaying(item.id)} key={item.id}>
-            <img
-              src="https://supperjoy-1311200541.cos.ap-chengdu.myqcloud.com/%E5%95%86%E5%93%81.png"
-              alt=""
-            />
-            <div className="info">
-              <div
-                style={{
-                  fontSize: "14px",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  width: "200px",
-                }}
-              >
-                {item.productName}
+      <div className="box">
+        <ul className="commodity">
+          {products.map((item) => (
+            <li onClick={() => goPaying(item.id)} key={item.id}>
+              <img
+                src="https://supperjoy-1311200541.cos.ap-chengdu.myqcloud.com/%E5%95%86%E5%93%81.png"
+                alt=""
+              />
+              <div className="info">
+                <div
+                  style={{
+                    fontSize: "14px",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    width: "200px",
+                  }}
+                >
+                  {item.productName}
+                </div>
+                <div>{"￥" + item.money}</div>
+                <div
+                  className="des"
+                  style={{
+                    fontSize: "12px",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    width: "200px",
+                  }}
+                >
+                  {item.description}
+                </div>
               </div>
-              <div>{"￥" + item.money}</div>
-              <div
-                className="des"
-                style={{
-                  fontSize: "12px",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  width: "200px",
-                }}
-              >
-                {item.description}
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </ErrorBoundary>
   );
 }
