@@ -261,7 +261,7 @@ export function Settings() {
     navigate(Path.Login);
   };
 
-  const handleKeyDown = (event) => {
+  function handleKeyDown(event) {
     if (event.key === "Enter") {
       axios({
         method: "post",
@@ -280,7 +280,7 @@ export function Settings() {
         }
       });
     }
-  };
+  }
 
   function handleInputChange(
     event: ChangeEvent<HTMLInputElement>,
