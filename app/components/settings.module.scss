@@ -68,3 +68,12 @@
   .user-prompt-actions {
   }
 }
+
+.inputClass{
+  outline: none;
+  transition: all .3s ease;
+}
+
+.inputClass:focus{
+  border: 1px solid #1a849a;
+}

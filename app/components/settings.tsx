@@ -236,13 +236,13 @@ export function Settings() {
 
   const getCurrentNumber = () => {
     axios({
-      method:"get",
-      url:"https://demo.supperjoy.online/user/getCurrentNumber",
-      withCredentials:true,
-    }).then((res)=>{
+      method: "get",
+      url: "https://demo.supperjoy.online/user/getCurrentNumber",
+      withCredentials: true,
+    }).then((res) => {
       setCurrentTime(res.data.data);
-    })
-  }
+    });
+  };
 
   const goLogin = () => {
     if (localStorage.getItem("userInfo")) {
@@ -261,8 +261,37 @@ export function Settings() {
     navigate(Path.Login);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      axios({
+        method: "post",
+        url: "https://demo.supperjoy.online/redemption/getRedem",
+        withCredentials: true,
+        data: {
+          code,
+          username: JSON.parse(localStorage.getItem("userInfo")).username,
+        },
+      }).then((res) => {
+        if (res.data.code == 200) {
+          alert(res.data.data);
+          location.reload();
+        } else {
+          alert(res.data.msg);
+        }
+      });
+    }
+  };
+
+  function handleInputChange(
+    event: ChangeEvent<HTMLInputElement>,
+    inputName: string,
+  ) {
+    setCode(event.target.value);
+  }
+
   let [expire, setExpire] = useState("");
   let [currentTime, setCurrentTime] = useState("");
+  let [code, setCode] = useState("");
 
   return (
     <ErrorBoundary>
@@ -349,9 +378,18 @@ export function Settings() {
             {/* </Link> */}
           </ListItem>
           <ListItem title="当前剩余次数(每三小时刷新)">
-            <span>
-              {currentTime}
-            </span>
+            <span>{currentTime}</span>
+          </ListItem>
+
+          <ListItem title="兑换码" style={{}}>
+            <input
+              type="text"
+              className={styles["inputClass"]}
+              placeholder="输入兑换码，按回车兑换"
+              value={code}
+              onKeyDown={handleKeyDown}
+              onChange={(e) => handleInputChange(e, "code")}
+            />
           </ListItem>
 
           {/* <ListItem
