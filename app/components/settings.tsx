@@ -266,11 +266,11 @@ export function Settings() {
       axios({
         method: "post",
         url: "https://demo.supperjoy.online/redemption/getRedem",
-        withCredentials: true,
         data: {
           code,
           username: JSON.parse(localStorage.getItem("userInfo")).username,
         },
+        withCredentials: true,
       }).then((res) => {
         if (res.data.code == 200) {
           alert(res.data.data);
@@ -287,6 +287,24 @@ export function Settings() {
     inputName: string,
   ) {
     setCode(event.target.value);
+    if (event.target.value.length == 16) {
+      axios({
+        method: "post",
+        url: "https://demo.supperjoy.online/redemption/getRedem",
+        data: {
+          code,
+          username: JSON.parse(localStorage.getItem("userInfo")).username,
+        },
+        withCredentials: true,
+      }).then((res) => {
+        if (res.data.code == 200) {
+          alert(res.data.data);
+          location.reload();
+        } else {
+          alert(res.data.msg);
+        }
+      });
+    }
   }
 
   let [expire, setExpire] = useState("");
